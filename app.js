@@ -4,6 +4,7 @@ const consign = require('consign');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -12,6 +13,7 @@ app.use(cookieParser('ntalk'));
 app.use(expressSession());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
