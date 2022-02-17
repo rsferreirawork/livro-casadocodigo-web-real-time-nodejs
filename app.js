@@ -6,12 +6,17 @@ const expressSession = require('express-session');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const error = require('./middlewares/error');
+const crypto = require('crypto');
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(cookieParser('ntalk'));
-app.use(expressSession());
+app.use(expressSession({
+	secret: crypto.randomUUID(),
+	resave: true,
+	saveUninitialized: true
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
