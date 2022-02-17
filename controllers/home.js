@@ -1,26 +1,25 @@
 module.exports = (app) => {
-  const HomeController = {
+  return {
     index(req, res) {
       res.render('home/index');
     },
 
-    login(req, res){
+    login(req, res) {
       const {usuario} = req.body;
       const {nome, email} = usuario;
 
-      if(email && nome){
+      if (email && nome) {
         usuario.contatos = [];
         req.session.usuario = usuario;
         res.redirect('/contatos');
-      }else{
+      } else {
         res.redirect('/');
       }
     },
 
-    logout(req, res){
+    logout(req, res) {
       req.session.destroy();
       res.redirect('/')
     }
   };
-  return HomeController;
 };
