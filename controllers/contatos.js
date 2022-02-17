@@ -1,4 +1,4 @@
-module.exports = (app) => {
+module.exports = () => {
 	return {
 		index(req, res) {
 			const {usuario} = req.session;

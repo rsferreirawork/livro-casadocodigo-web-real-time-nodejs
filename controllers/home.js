@@ -1,4 +1,4 @@
-module.exports = (app) => {
+module.exports = () => {
   return {
     index(req, res) {
       res.render('home/index');
@@ -7,7 +7,7 @@ module.exports = (app) => {
     login(req, res) {
       const {usuario} = req.body;
       const {nome, email} = usuario;
-
+      console.log(usuario);
       if (email && nome) {
         usuario.contatos = [];
         req.session.usuario = usuario;
