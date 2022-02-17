@@ -7,7 +7,7 @@ module.exports = () => {
     login(req, res) {
       const {usuario} = req.body;
       const {nome, email} = usuario;
-      console.log(usuario);
+
       if (email && nome) {
         usuario.contatos = [];
         req.session.usuario = usuario;
