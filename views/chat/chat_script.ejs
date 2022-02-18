@@ -9,8 +9,8 @@
     chat.innerHTML += msg;
   });
   
-  var enviar = function() {
-    var msg = document.getElementById('mensagem');
+  function enviar() {
+    const msg = document.getElementById('mensagem');
     socket.emit('send-server', msg.value);
     msg.value = '';
     msg.focus();
