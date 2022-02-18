@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 const config = require('./config');
 const error = require('./middlewares/error');
 
-mongoose.connect('mongodb://localhost:27017/ntalk');
+mongoose.connect(config.mongoDBURL);
 
 const app = express();
 const server = http.Server(app);
@@ -47,7 +47,7 @@ io.use((socket, next) => {
   });
 });
 
-consign({})
+consign({ verbose: false })
   .include('models')
   .then('controllers')
   .then('routes')
@@ -59,3 +59,5 @@ app.use(error.notFound);
 app.use(error.serverError);
 
 server.listen(3000, () => console.log('Ntalk no ar.'));
+
+module.exports = app;
