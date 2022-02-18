@@ -1,83 +1,72 @@
-const { Types: { ObjectId } } = require('mongoose');
+module.exports = function(app) {
 
-module.exports = (app) => {
-  const Usuario = app.models.usuario;
+  var Usuario = app.models.usuario;
 
-  const ContatosController = {
-    async index(req, res) {
-      try {
-        const id = ObjectId(req.session.usuario._id);
-        const usuario = await Usuario.findById(id);
-        const { contatos } = usuario;
-        res.render('contatos/index', { contatos });
-      } catch {
-        res.redirect('/');
-      }
+  var ContatoController = {
+
+    index: function(req, res) {
+      var _id = req.session.usuario._id;
+      Usuario.findById(_id, function(erro, usuario) {
+        var contatos = usuario.contatos;
+        var resultado = {contatos: contatos};
+        res.render('contatos/index', resultado);
+      });
     },
-    async create(req, res) {
-      try {
-        const { contato } = req.body;
-        const id = ObjectId(req.session.usuario._id);
-        const set = { $push: { contatos: contato } };
-        await Usuario.findByIdAndUpdate(id, set);
-        res.redirect('/contatos');
-      } catch {
-        res.redirect('/');
-      }
-    },
-    async show(req, res) {
-      try {
-        const id = ObjectId(req.session.usuario._id);
-        const contatoId = ObjectId(req.params.id);
-        const usuario = await Usuario.findById(id);
-        const { contatos } = usuario;
-        const contato = contatos.find((ct) => {
-          return ct._id.toString() === contatoId.toString();
+
+    create: function(req, res) {
+      var _id = req.session.usuario._id;
+      Usuario.findById(_id, function(erro, usuario) {
+        var contato = req.body.contato;
+        usuario.contatos.push(contato);
+        usuario.save(function() {
+          res.redirect('/contatos');
         });
-        res.render('contatos/show', { contato });
-      } catch {
-        res.redirect('/');
-      }
+      });
     },
-    async edit(req, res) {
-      try {
-        const id = ObjectId(req.session.usuario._id);
-        const contatoId = ObjectId(req.params.id);
-        const usuario = await Usuario.findById(id);
-        const { contatos } = usuario;
-        const contato = contatos.find((ct) => {
-          return ct._id.toString() === contatoId.toString();
+
+    show: function(req, res) {
+      var _id = req.session.usuario._id;
+      Usuario.findById(_id, function(erro, usuario) {
+        var contatoID = req.params.id;
+        var contato = usuario.contatos.id(contatoID);
+        var resultado = {contato: contato};
+        res.render('contatos/show', resultado);
+      });
+    },
+
+    edit: function(req, res) {
+      var _id = req.session.usuario._id;
+      Usuario.findById(_id, function(erro, usuario) {
+        var contatoID = req.params.id;
+        var contato = usuario.contatos.id(contatoID);
+        var resultado = {contato: contato};
+        res.render('contatos/edit', resultado);
+      });
+    },
+
+    update: function(req, res) {
+      var _id = req.session.usuario._id;
+      Usuario.findById(_id, function(erro, usuario) {
+        var contatoID = req.params.id;
+        var contato = usuario.contatos.id(contatoID);
+        contato.nome = req.body.contato.nome;
+        contato.email = req.body.contato.email;
+        usuario.save(function() {
+          res.redirect('/contatos');
         });
-        res.render('contatos/edit', { contato, usuario });
-      } catch {
-        res.redirect('/');
-      }
+      });
     },
-    async update(req, res) {
-      try {
-        const contatoId = ObjectId(req.params.id);
-        const usuarioId = ObjectId(req.session.usuario._id);
-        const { contato } = req.body;
-        const where = { _id: usuarioId, 'contatos._id': contatoId };
-        const set = { $set: { 'contatos.$': contato } };
-        await Usuario.updateOne(where, set);
-        res.redirect('/contatos');
-      } catch {
-        res.redirect('/');
-      }
-    },
-    async destroy(req, res) {
-      try {
-        const contatoId = ObjectId(req.params.id);
-        const usuarioId = ObjectId(req.session.usuario._id);
-        const where = { _id: usuarioId };
-        const set = { $pull: { contatos: { _id: contatoId } } };
-        await Usuario.updateOne(where, set);
-        res.redirect('/contatos');
-      } catch {
-        res.redirect('/');
-      }
+
+    destroy: function(req, res) {
+      var _id = req.session.usuario._id;
+      Usuario.findById(_id, function(erro, usuario) {
+        var contatoID = req.params.id;
+        usuario.contatos.id(contatoID).remove();
+        usuario.save(function() {
+          res.redirect('/contatos');
+        });
+      });
     }
-  };
-  return ContatosController;
+  }
+  return ContatoController;
 };

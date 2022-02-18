@@ -1,84 +1,73 @@
-const express = require('express');
-const path = require('path');
-const http = require('http');
-const socketIO = require('socket.io');
-const consign = require('consign');
-const bodyParser = require('body-parser');
-const cookie = require('cookie');
-const csurf = require('csurf');
-const compression = require('compression');
-const expressSession = require('express-session');
-const methodOverride = require('method-override');
-const mongoose = require('mongoose');
-const redis = require('redis');
-const redisAdapter = require('socket.io-redis');
-const connectRedis = require('connect-redis');
-const config = require('./config');
-const error = require('./middlewares/error');
-
-mongoose.connect(config.mongoDBURL);
-
-const app = express();
-const server = http.Server(app);
-const io = socketIO(server);
-const RedisStore = connectRedis(expressSession);
-const store = new RedisStore({
-  client: redis.createClient(config.redis)
-});
+var express = require('express')
+  , cfg = require('./config.json')
+  , load = require('express-load')
+  , bodyParser = require('body-parser')
+  , cookieParser = require('cookie-parser')
+  , expressSession = require('express-session')
+  , methodOverride = require('method-override')
+  , error = require('./middlewares/error')
+  , compression = require('compression')
+  , csurf = require('csurf')
+  , redisAdapter = require('socket.io-redis')
+  , RedisStore = require('connect-redis')(expressSession)
+  , app = express()
+  , server = require('http').Server(app)
+  , io = require('socket.io')(server)
+  , cookie = cookieParser(cfg.SECRET)
+  , store = new RedisStore({prefix: cfg.KEY})
+;
 
 app.disable('x-powered-by');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(compression());
+app.use(cookie);
 app.use(expressSession({
-  store,
-  resave: true,
-  saveUninitialized: true,
-  name: config.sessionKey,
-  secret: config.sessionSecret
+  secret: cfg.SECRET, 
+  name: cfg.KEY, 
+  resave: false, 
+  saveUninitialized: false,
+  store: store
 }));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
-app.use(
-  express.static(
-    path.join(__dirname, 'public'),
-    config.cache
-  )
-);
+app.use(express.static(__dirname + '/public', cfg.CACHE));
 app.use(csurf());
-app.use((req, res, next) => {
+app.use(function(req, res, next) {
   res.locals._csrf = req.csrfToken();
   next();
 });
 
-io.adapter(redisAdapter(config.redis));
-io.use((socket, next) => {
-  const cookieData = socket.request.headers.cookie;
-  const cookieObj = cookie.parse(cookieData);
-  const sessionHash = cookieObj[config.sessionKey] || '';
-  const sessionID = sessionHash.split('.')[0].slice(2);
-  store.get(sessionID, (err, currentSession) => {
-    if (err) {
-      return next(new Error('Acesso negado!'));
-    }
-    socket.handshake.session = currentSession;
-    return next();
+io.adapter(redisAdapter(cfg.REDIS));
+io.use(function(socket, next) {
+  var data = socket.request;
+  cookie(data, {}, function(err) {
+    var sessionID = data.signedCookies[cfg.KEY];
+    store.get(sessionID, function(err, session) {
+      if (err || !session) {
+        return next(new Error('not authorized'));
+      } else {
+        socket.handshake.session = session;
+        return next();
+      }
+    });
   });
-  return true;
 });
 
-consign({ verbose: false })
-  .include('models')
+load('models')
   .then('controllers')
   .then('routes')
-  .then('events')
-  .into(app, io)
+  .into(app)
 ;
+load('sockets')
+  .into(io);
 
 app.use(error.notFound);
 app.use(error.serverError);
 
-server.listen(3000, () => console.log('Ntalk no ar.'));
+server.listen(3000, function(){
+  console.log("Ntalk no ar.");
+});
 
 module.exports = app;

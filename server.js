@@ -1,8 +1,17 @@
-const { Monitor } = require('forever-monitor');
-const config = require('./config.js');
+var forever = require('forever-monitor');
+var Monitor = forever.Monitor;
 
-const child = new Monitor('clusters.js', config.forever);
+var child = new Monitor('app.js', {
+  max: 10,
+  silent: false,
+  killTree: true,
+  logFile: 'forever.log',
+  outFile: 'app.log',
+  errFile: 'error.log'
+});
 
-child.on('exit', () => console.log('Servidor foi finalizado.'));
+child.on('exit', function () {
+  console.log('O server foi finalizado.');
+});
 
 child.start();

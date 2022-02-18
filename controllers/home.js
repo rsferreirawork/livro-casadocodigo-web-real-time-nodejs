@@ -1,35 +1,40 @@
-module.exports = (app) => {
-  const Usuario = app.models.usuario;
+module.exports = function(app) {
 
-  const HomeController = {
-    index(req, res) {
+  var Usuario = app.models.usuario;
+
+  var HomeController = {
+    index: function(req, res) {
       res.render('home/index');
     },
-    async login(req, res) {
-      const { usuario } = req.body;
-      const { email, nome } = usuario;
-      const where = { email, nome };
-      const set = {
-        $setOnInsert: { email, nome, contatos: [] }
-      };
-      const options = {
-        upsert: true, runValidators: true, new: true
-      };
-      try {
-        const usuario = await Usuario
-          .findOneAndUpdate(where, set, options)
-          .select('email nome')
-        ;
-        req.session.usuario = usuario;
-        res.redirect('/contatos');
-      } catch {
-        res.redirect('/');
-      }
+
+    login: function(req, res) {
+      var query = {email: req.body.usuario.email};
+      Usuario.findOne(query)
+             .select('nome email')
+             .exec(function(erro, usuario){
+        if (usuario) {
+          req.session.usuario = usuario;
+          res.redirect('/contatos');
+        
+        } else {
+          Usuario.create(req.body.usuario, function(erro, usuario) {
+            if(erro){
+              res.redirect('/');
+            }else{
+              req.session.usuario = usuario;
+              res.redirect('/contatos');
+            }
+          });
+        }
+      });
     },
-    logout(req, res) {
+
+    logout: function(req, res) {
       req.session.destroy();
       res.redirect('/');
     }
   };
+
   return HomeController;
+
 };

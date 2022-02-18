@@ -1,6 +1,8 @@
-const autenticar = require('./../middlewares/autenticador');
+module.exports = function(app) {
 
-module.exports = (app) => {
-  const { chat } = app.controllers;
+  var autenticar = require('./../middlewares/autenticador')
+    , chat = app.controllers.chat;
+
   app.get('/chat', autenticar, chat.index);
+
 };

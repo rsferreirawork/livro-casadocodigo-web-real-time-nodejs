@@ -1,22 +1,19 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+module.exports = function(app) {
 
-module.exports = () => {
-  const contato = Schema({
-    nome: String,
-    email: String
+  var db = require('../libs/db_connect')();
+  var Schema = require('mongoose').Schema;
+
+  var contato = Schema({
+    nome: String
+  , email: String
   });
-  const usuario = Schema({
-    nome: {
-      type: String,
-      required: true
-    },
-    email: {
-      type: String,
-      required: true,
-      index: { unique: true }
-    },
-    contatos: [contato]
+
+  var usuario = Schema({
+      nome: { type: String, required: true }
+    , email: { type: String, required: true
+             , index: {unique: true} }
+    , contatos: [contato]
   });
-  return mongoose.model('usuarios', usuario);
+
+  return db.model('usuarios', usuario);
 };

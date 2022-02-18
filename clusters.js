@@ -1,16 +1,18 @@
-const cluster = require('cluster');
-const cpus = require('os').cpus();
-
+var cluster = require('cluster')
+  , cpus = require('os').cpus()
+;
 if (cluster.isMaster) {
-  cpus.forEach(() => cluster.fork());
-  cluster.on('listening', (worker) => {
-    console.log(`Cluster ${worker.process.pid} conectado`);
+  cpus.forEach(function(cpu) {
+    cluster.fork();
   });
-  cluster.on('disconnect', (worker) => {
-    console.log(`Cluster ${worker.process.pid} desconectado`);
+  cluster.on('listening', function(worker) {
+    console.log("Cluster %d conectado", worker.process.pid);
   });
-  cluster.on('exit', (worker) => {
-    console.log(`Cluster ${worker.process.pid} finalizado`);
+  cluster.on('disconnect', function(worker) {
+    console.log('Cluster %d esta desconectado.', worker.process.pid);
+  });
+  cluster.on('exit', function(worker) {
+    console.log('Cluster %d caiu fora.', worker.process.pid);
   });
 } else {
   require('./app');
