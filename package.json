@@ -4,12 +4,14 @@
   "version": "0.0.1",
   "private": false,
   "scripts": {
-    "start": "node app.js",
-    "test": "SET NODE_ENV=test && mocha test/**/*.js --exit"
+    "start": "SET DEBUG=* && node clusters >> app.log",
+    "test": "SET NODE_ENV=test && mocha test/**/*.js"
   },
   "dependencies": {
     "body-parser": "1.19.0",
     "consign": "0.1.6",
+    "compression": "1.7.4",
+    "connect-redis": "6.0.0",
     "cookie": "0.4.1",
     "ejs": "3.1.6",
     "express": "4.17.1",
@@ -17,7 +19,8 @@
     "method-override": "3.0.0",
     "mongoose": "6.0.6",
     "redis": "3.1.2",
-    "socket.io": "4.2.0"
+    "socket.io": "4.2.0",
+    "socket.io-redis": "6.1.1"
   },
   "devDependencies": {
     "mocha": "9.1.1",
