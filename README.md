@@ -32,77 +32,77 @@ Vale lembrar que este livro tem como pré-requisito saber programar e, principal
 <details>
 	<summary>Sumário</summary>
 
-1. Bem-vindo ao mundo Node.js
-	1. O problema das arquiteturas bloqueantes
-	1. E assim nasceu o Node.js
-	1. Single-thread
-	1. Event-loop
-	1. Instalação e configuração
-	1. Gerenciando módulos com NPM
-	1. Entendendo o package.json
-	1. Escopos de variáveis globais
-	1. CommonJS, como ele funciona
-2. Desenvolvendo aplicações web
-	2. Criando nossa primeira aplicação web
-	2. Como funciona um servidor HTTP?
-	2. Trabalhando com diversas rotas
-	2. Separando o HTML do JavaScript
-	2. Desafio: implementando um roteador de URL
-3. Por que o assíncrono?
-	3. Desenvolvendo de forma assíncrona
-	3. Assincronismo versus sincronismo
-	3. Entendendo o event-loop
-	3. Evitando callbacks hell
-4. Iniciando com o Express
-	4. Por que utilizá-lo?
-	4. Instalação e configuração
-	4. Criando um projeto de verdade
-	4. Gerando o scaffold do projeto
-	4. Organizando os diretórios do projeto
-5. Dominando o Express
-	5. Estruturando views
-	5. Controlando as sessões de usuários
-	5. Criando rotas no padrão REST
-	5. Aplicando filtros antes de acessar as rotas
-	5. Indo além: criando páginas de erros amigáveis
-6. Programando sistemas real-time
-	6. Como funciona uma conexão bidirecional?
-	6. Conhecendo o framework Socket.IO
-	6. Implementando um chat real-time
-	6. Organizando o carregamento de Sockets
-	6. Compartilhando sessão entre Socket.IO e Express
-	6. Gerenciando salas do chat
-	6. Notificadores na agenda de contatos
-	6. Principais eventos do Socket.IO
-7. Integração com banco de dados
-	7. Bancos de dados mais adaptados para Node.js
-	7. Instalando o MongoDB
-	7. MongoDB no Node.js utilizando Mongoose
-	7. Modelando com Mongoose
-	7. Implementando um CRUD na agenda de contatos
-	7. Persistindo estruturas de dados usando Redis
-	7. Mantendo um histórico de conversas do chat
-	7. Persistindo lista de usuários online
-8. Preparando um ambiente de testes
-	8. Mocha, o framework de testes para Node.js
-	8. Criando um ambiente para testes
-	8. Instalando e configurando o Mocha
-	8. Rodando o Mocha no ambiente de testes
-	8. Testando as rotas
-	8. Deixando seus testes mais limpos
-9. Aplicação Node em produção – Parte 1
-	9. Configurando clusters
-	9. Redis controlando as sessões da aplicação
-	9. Monitorando aplicação por meio de logs
-	9. Otimizações no Express
-10. Aplicação Node em produção – Parte 2
-	10. Mantendo a aplicação protegida
-	10. Mantendo o sistema no ar com Forever
-	10. Externalizando variáveis de configurações
-11. Node.js e Nginx
-	11. Servindo arquivos estáticos do Node.js usando o Nginx
-12. Continuando os estudos
-13. Bibliografia
+- Bem-vindo ao mundo Node.js
+	- O problema das arquiteturas bloqueantes
+	- E assim nasceu o Node.js
+	- Single-thread
+	- Event-loop
+	- Instalação e configuração
+	- Gerenciando módulos com NPM
+	- Entendendo o package.json
+	- Escopos de variáveis globais
+	- CommonJS, como ele funciona
+- Desenvolvendo aplicações web
+	- Criando nossa primeira aplicação web
+	- Como funciona um servidor HTTP?
+	- Trabalhando com diversas rotas
+	- Separando o HTML do JavaScript
+	- Desafio: implementando um roteador de URL
+- Por que o assíncrono?
+	- Desenvolvendo de forma assíncrona
+	- Assincronismo versus sincronismo
+	- Entendendo o event-loop
+	- Evitando callbacks hell
+- Iniciando com o Express
+	- Por que utilizá-lo?
+	- Instalação e configuração
+	- Criando um projeto de verdade
+	- Gerando o scaffold do projeto
+	- Organizando os diretórios do projeto
+- Dominando o Express
+	- Estruturando views
+	- Controlando as sessões de usuários
+	- Criando rotas no padrão REST
+	- Aplicando filtros antes de acessar as rotas
+	- Indo além: criando páginas de erros amigáveis
+- Programando sistemas real-time
+	- Como funciona uma conexão bidirecional?
+	- Conhecendo o framework Socket.IO
+	- Implementando um chat real-time
+	- Organizando o carregamento de Sockets
+	- Compartilhando sessão entre Socket.IO e Express
+	- Gerenciando salas do chat
+	- Notificadores na agenda de contatos
+	- Principais eventos do Socket.IO
+- Integração com banco de dados
+	- Bancos de dados mais adaptados para Node.js
+	- Instalando o MongoDB
+	- MongoDB no Node.js utilizando Mongoose
+	- Modelando com Mongoose
+	- Implementando um CRUD na agenda de contatos
+	- Persistindo estruturas de dados usando Redis
+	- Mantendo um histórico de conversas do chat
+	- Persistindo lista de usuários online
+- Preparando um ambiente de testes
+	- Mocha, o framework de testes para Node.js
+	- Criando um ambiente para testes
+	- Instalando e configurando o Mocha
+	- Rodando o Mocha no ambiente de testes
+	- Testando as rotas
+	- Deixando seus testes mais limpos
+- Aplicação Node em produção – Parte 1
+	- Configurando clusters
+	- Redis controlando as sessões da aplicação
+	- Monitorando aplicação por meio de logs
+	- Otimizações no Express
+- Aplicação Node em produção – Parte 2
+	- Mantendo a aplicação protegida
+	- Mantendo o sistema no ar com Forever
+	- Externalizando variáveis de configurações
+- Node.js e Nginx
+	- Servindo arquivos estáticos do Node.js usando o Nginx
+- Continuando os estudos
+- Bibliografia
 
 </details>
 
