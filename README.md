@@ -1,6 +1,24 @@
-# livro-casadocodigo-web-real-time-nodejs
-Repositório com projeto desenvolvido durante a leitura do livro 'Aplicações web real-time com Node.js' da editora Casa do Código 
+# Aplicações web real-time com Node.js - Ntalk
+Repositório com projeto desenvolvido durante a leitura do livro 'Aplicações web real-time com Node.js' da editora Casa do Código.
 
+## Opinião do leitor
+Este é um livro de leitura rápida e que vai diretamente ao ponto, o desenvolvimento do projeto final, um breve chat em tempo real com cadastro de contatos e notificações de status, porém apontando pilares e relatando brevemente seus valores sem se aprofundar de fato nos mesmos. Como por exemplo mongoDB, Redis, Mocha, Clusters, Segurança, Monitoramento e Nginx. Apesar desses assuntos serem abordados superficialmente eles foram abordados o suficiente para o andamento do projeto, fazendo com que o leitor entenda a necessidade de uma pesquisa após o término da leitura.
+
+Este livro é bastante indicado para quem está começando a entender o Node.js, porém já tem familiaridade com outras linguagens de programação, lógica de programação e principalmente JavaScript ou quem esteja em busca de entender um pouco mais sobre as dependências Express e Socket.io mesmo que atualmente algumas formas de implementação tenham mudados não vai atrapalhar a experiência, ficando como desafio para o leitor uma "tradução" para as implementações atuais das ferramentas apresentadas.
+
+## Notas do Leitor
+O que vejo como ponto fraco para este livro é basicamente presente em 95% dos livros sobre programação com exemplos práticos, quando você tem um projeto que avança sua escrita no decorrer do livro o escritor não consegue avançar linha a linha o que torna a experiencia de um leitor que nunca viu sobre o assunto algo que demanda de muita atenção para evitar erros de escrita.
+
+Para tal problema a solução que vejo é simples, adicionar a contagem de linhas nos exemplos de código o que ajuda quando o escritor precisar voltar a um arquivo já abordado dando a oportunidade de ele ocultar partes do arquivo que não serão modificadas.
+Um outro ponto sobre o mesmo assunto que pode ser utilizada em conjunto com o anterior é o uso da técnica diff utilizada principalmente nos motores de versionamento de código como o GIT, bastanto apenas adicionar os sinais de + ou - no começo das linhas afetadas.
+``` diff
+...
+- exports.hello = (msg) => {
++ module.exports = (msg) => {
+    console.log(msg);
+  };
+...
+```
 ## Conteúdo
 > Node.js é uma poderosa plataforma. Ele permite escrever aplicações JavaScript no server-side, tirando proveito da sintaxe e familiaridade da linguagem para escrever aplicações web escaláveis.
 >
